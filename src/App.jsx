@@ -13,65 +13,91 @@ const getInitialTheme = () => {
     : "light";
 };
 
-const singlePost = {
-  id: 1,
-  title: "My Take on the Blackhole Theory",
-  excerpt: "A rupture in spacetime.",
-  date: "Nov 15, 2025",
-  dateISO: "2025-10-28",
-  readingTime: "5 min read",
-  timeRequired: "PT7M",
-  href: "/blog/blackhole-theory",
-  canonical: "/blog/blackhole-theory",
-};
+const blogPosts = [
+  {
+    id: 1,
+    title: "My Take on the Blackhole Theory",
+    excerpt: "A rupture in spacetime.",
+    date: "Nov 15, 2025",
+    dateISO: "2025-10-28",
+    readingTime: "5 min read",
+    timeRequired: "PT7M",
+    href: "/blog/blackhole-theory",
+    canonical: "/blog/blackhole-theory",
+  },
+  {
+    id: 2,
+    title: "Time Travel Exists, But Only in the Math",
+    excerpt:
+      "Physics already accepts time travel. The equations are clear. We just can't use it.",
+    date: "Nov 16, 2025",
+    dateISO: "2025-11-16",
+    readingTime: "5 min read",
+    timeRequired: "PT5M",
+    href: "/blog/time-travel",
+    canonical: "/blog/time-travel",
+  },
+];
+
+const placeholderPosts = [
+  {
+    id: 3,
+    title: "",
+    excerpt: "",
+    date: "",
+    dateISO: "",
+    readingTime: "",
+    timeRequired: "",
+    href: "#",
+    canonical: "",
+  },
+];
 
 function BlogCard({ post }) {
-  const cardStars = useMemo(
-    () =>
-      Array.from({ length: 8 }, (_, i) => ({
-        id: i,
-        left: Math.random() * 100,
-        top: Math.random() * 100,
-        delay: Math.random() * 4,
-        opacity: Math.random() * 0.3 + 0.1,
-      })),
-    []
-  );
+  // Empty card for placeholder
+  if (!post.title) {
+    return (
+      <article className="relative border border-[var(--border-muted)]/50 bg-transparent p-5 overflow-hidden opacity-40">
+        <div className="flex items-center justify-center h-20">
+          <span className="text-[11px] text-[var(--text-dim)] tracking-[0.2em] uppercase font-medium">
+            Coming Soon
+          </span>
+        </div>
+      </article>
+    );
+  }
 
   return (
-    <article className="relative p-6 rounded-lg border border-[var(--border-muted)] transition-all duration-200 hover:border-[var(--border-strong)] overflow-hidden">
-      {/* Twinkling stars */}
-      {cardStars.map((star) => (
-        <div
-          key={star.id}
-          className="absolute w-0.5 h-0.5 bg-white rounded-full animate-twinkle"
-          style={{
-            left: `${star.left}%`,
-            top: `${star.top}%`,
-            animationDelay: `${star.delay}s`,
-            opacity: star.opacity,
-          }}
-        />
-      ))}
+    <Link
+      to={post.href}
+      className="block focus-visible:outline-none group"
+      aria-label={`Read ${post.title}`}
+    >
+      <article className="relative border border-[var(--border-muted)] bg-[var(--bg-panel)]/40 backdrop-blur-sm p-6 transition-all duration-200 hover:border-[var(--border-strong)] hover:bg-[var(--bg-panel)]/60 overflow-hidden">
+        <div className="relative">
+          {/* Meta info */}
+          <div className="flex items-center gap-2.5 mb-3">
+            <time className="text-[11px] text-[var(--text-dim)] tracking-[0.08em] font-medium">
+              {post.date}
+            </time>
+            <span className="w-0.5 h-0.5 rounded-full bg-[var(--text-dim)]"></span>
+            <span className="text-[11px] text-[var(--text-dim)] tracking-[0.08em]">
+              {post.readingTime}
+            </span>
+          </div>
 
-      <Link
-        to={post.href}
-        className="block relative z-10 focus-visible:outline-none"
-        aria-label={`Read ${post.title}`}
-      >
-        <p className="text-xs uppercase tracking-[0.2em] text-[var(--text-dim)] mb-3">
-          <time dateTime={post.dateISO}>{post.date}</time>
-          <span aria-hidden="true">&nbsp;&middot;&nbsp;</span>
-          <span>{post.readingTime}</span>
-        </p>
-        <h2 className="text-xl md:text-2xl m-0 mb-2 text-[var(--text-strong)] font-medium">
-          {post.title}
-        </h2>
-        <p className="text-sm text-[var(--text-soft)] m-0 leading-relaxed">
-          {post.excerpt}
-        </p>
-      </Link>
-    </article>
+          {/* Title */}
+          <h2 className="text-lg md:text-xl m-0 mb-2 text-[var(--text-strong)] font-semibold leading-snug tracking-tight">
+            {post.title}
+          </h2>
+
+          {/* Excerpt */}
+          <p className="text-sm text-[var(--text-soft)] m-0 leading-relaxed">
+            {post.excerpt}
+          </p>
+        </div>
+      </article>
+    </Link>
   );
 }
 
@@ -112,16 +138,26 @@ function App() {
   const structuredData = useMemo(
     () => ({
       "@context": "https://schema.org",
-      "@type": "BlogPosting",
-      headline: singlePost.title,
-      description: singlePost.excerpt,
-      datePublished: singlePost.dateISO,
-      url: singlePost.canonical ?? singlePost.href,
+      "@type": "Blog",
+      name: `${AUTHOR_NAME}'s Blog`,
+      description:
+        "Notes, changelogs, and essays written between shipping cycles",
       author: {
         "@type": "Person",
         name: AUTHOR_NAME,
       },
-      timeRequired: singlePost.timeRequired,
+      blogPost: blogPosts.map((post) => ({
+        "@type": "BlogPosting",
+        headline: post.title,
+        description: post.excerpt,
+        datePublished: post.dateISO,
+        url: post.canonical ?? post.href,
+        author: {
+          "@type": "Person",
+          name: AUTHOR_NAME,
+        },
+        timeRequired: post.timeRequired,
+      })),
     }),
     []
   );
@@ -179,9 +215,28 @@ function App() {
           className="flex flex-col gap-8 mt-10"
           aria-label="Latest articles"
         >
-          <BlogCard post={singlePost} />
+          {blogPosts.map((post) => (
+            <BlogCard key={post.id} post={post} />
+          ))}
+          {placeholderPosts.map((post) => (
+            <BlogCard key={post.id} post={post} />
+          ))}
         </section>
       </main>
+
+      <footer className="max-w-[900px] mx-auto px-6 md:px-12 py-8 mt-12 border-t border-[var(--border-muted)]">
+        <p className="text-sm text-[var(--text-dim)] text-center">
+          Follow me on{" "}
+          <a
+            href="https://x.com/tirthhh30"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[var(--text-base)] hover:text-[var(--text-strong)] transition-colors duration-200 underline underline-offset-2"
+          >
+            X
+          </a>
+        </p>
+      </footer>
 
       <script
         type="application/ld+json"

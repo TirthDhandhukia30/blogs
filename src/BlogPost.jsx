@@ -47,6 +47,52 @@ function BlogPost() {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    // Update meta tags for OG image
+    const updateMetaTags = () => {
+      // Update title
+      document.title = "My Take on Black Hole Theory | Tirth's Blog";
+
+      // Helper function to set meta tag
+      const setMetaTag = (property, content, isProperty = true) => {
+        const attribute = isProperty ? "property" : "name";
+        let element = document.querySelector(
+          `meta[${attribute}="${property}"]`
+        );
+        if (!element) {
+          element = document.createElement("meta");
+          element.setAttribute(attribute, property);
+          document.head.appendChild(element);
+        }
+        element.setAttribute("content", content);
+      };
+
+      const description =
+        "A rupture in spacetime — exploring black holes through the lens of structural failure rather than just gravitational collapse.";
+      const url = window.location.origin + "/blog/blackhole-theory";
+      const ogImage = window.location.origin + "/blackhole-og.png";
+
+      // Description
+      setMetaTag("description", description, false);
+
+      // Open Graph
+      setMetaTag("og:type", "article");
+      setMetaTag("og:url", url);
+      setMetaTag("og:title", "My Take on Black Hole Theory");
+      setMetaTag("og:description", description);
+      setMetaTag("og:image", ogImage);
+
+      // Twitter
+      setMetaTag("twitter:card", "summary_large_image");
+      setMetaTag("twitter:url", url);
+      setMetaTag("twitter:title", "My Take on Black Hole Theory");
+      setMetaTag("twitter:description", description);
+      setMetaTag("twitter:image", ogImage);
+    };
+
+    updateMetaTags();
+  }, []);
+
   const toggleTheme = () =>
     setTheme((prev) => (prev === "dark" ? "light" : "dark"));
 
@@ -143,10 +189,10 @@ function BlogPost() {
                 />
               </div>
               <div>
-                <h1 className="text-2xl md:text-3xl font-semibold text-[var(--text-strong)] m-0 mb-3 leading-tight">
+                <h1 className="text-xl md:text-2xl font-semibold text-[var(--text-strong)] m-0 mb-3 leading-tight">
                   My Take on Black Hole Theory
                 </h1>
-                <p className="text-base text-[var(--text-soft)] leading-relaxed">
+                <p className="text-sm text-[var(--text-soft)] leading-relaxed">
                   A rupture in spacetime — exploring black holes through the
                   lens of structural failure rather than just gravitational
                   collapse.
@@ -156,7 +202,7 @@ function BlogPost() {
           </header>
 
           <div className="prose-blog">
-            <p className="text-base text-[var(--text-base)] leading-relaxed mb-6">
+            <p className="text-sm text-[var(--text-base)] leading-relaxed mb-6">
               You look at black holes and hear the usual line: regions where{" "}
               <strong className="font-semibold text-[var(--text-strong)]">
                 gravity gets so strong that nothing escapes
@@ -174,7 +220,7 @@ function BlogPost() {
               .
             </p>
 
-            <p className="text-base text-[var(--text-base)] leading-relaxed mb-6">
+            <p className="text-sm text-[var(--text-base)] leading-relaxed mb-6">
               Think of the universe as a{" "}
               <strong className="font-semibold text-[var(--text-strong)]">
                 massive aircraft in motion
@@ -192,13 +238,13 @@ function BlogPost() {
               .
             </p>
 
-            <p className="text-base text-[var(--text-base)] leading-relaxed mb-6">
+            <p className="text-sm text-[var(--text-base)] leading-relaxed mb-6">
               You might look at this analogy and laugh. But several theories
               support the idea of extreme curvature acting like a tear or a
               puncture.
             </p>
 
-            <h2 className="text-2xl md:text-3xl font-semibold text-[var(--text-strong)] mt-12 mb-4">
+            <h2 className="text-lg md:text-xl font-semibold text-[var(--text-strong)] mt-12 mb-4">
               You see this in the Schwarzschild radius
             </h2>
 
@@ -217,7 +263,7 @@ function BlogPost() {
               </p>
             </div>
 
-            <p className="text-base text-[var(--text-base)] leading-relaxed mb-6">
+            <p className="text-sm text-[var(--text-base)] leading-relaxed mb-6">
               This formula gives the size of the{" "}
               <strong className="font-semibold text-[var(--text-strong)]">
                 event horizon
@@ -230,7 +276,7 @@ function BlogPost() {
               stronger the flow.
             </p>
 
-            <p className="text-base text-[var(--text-base)] leading-relaxed mb-6">
+            <p className="text-sm text-[var(--text-base)] leading-relaxed mb-6">
               You also see it in the way{" "}
               <strong className="font-semibold text-[var(--text-strong)]">
                 general relativity
@@ -245,7 +291,7 @@ function BlogPost() {
               , and inside a black hole those paths lead only one way.
             </p>
 
-            <p className="text-base text-[var(--text-base)] leading-relaxed mb-6">
+            <p className="text-sm text-[var(--text-base)] leading-relaxed mb-6">
               The rupture picture goes further. Early universe models talk about{" "}
               <strong className="font-semibold text-[var(--text-strong)]">
                 topological defects
@@ -265,11 +311,11 @@ function BlogPost() {
               describes this breakdown.
             </p>
 
-            <h2 className="text-2xl md:text-3xl font-semibold text-[var(--text-strong)] mt-12 mb-4">
+            <h2 className="text-lg md:text-xl font-semibold text-[var(--text-strong)] mt-12 mb-4">
               Accretion and the Growing Rupture
             </h2>
 
-            <p className="text-base text-[var(--text-base)] leading-relaxed mb-6">
+            <p className="text-sm text-[var(--text-base)] leading-relaxed mb-6">
               You also have the physics of accretion. Matter near a black hole
               falls inward and forms a disk. The rate depends on Bondi
               accretion,
@@ -292,7 +338,7 @@ function BlogPost() {
               </p>
             </div>
 
-            <p className="text-base text-[var(--text-base)] leading-relaxed mb-6">
+            <p className="text-sm text-[var(--text-base)] leading-relaxed mb-6">
               A stronger{" "}
               <strong className="font-semibold text-[var(--text-strong)]">
                 gravitational field
@@ -302,7 +348,7 @@ function BlogPost() {
               scale.
             </p>
 
-            <p className="text-base text-[var(--text-base)] leading-relaxed mb-6">
+            <p className="text-sm text-[var(--text-base)] leading-relaxed mb-6">
               The rupture grows over time. The{" "}
               <strong className="font-semibold text-[var(--text-strong)]">
                 area theorem
@@ -315,7 +361,7 @@ function BlogPost() {
               falls in stretches it further.
             </p>
 
-            <p className="text-base text-[var(--text-base)] leading-relaxed mb-6">
+            <p className="text-sm text-[var(--text-base)] leading-relaxed mb-6">
               Rotation twists the story. A spinning black hole drags spacetime
               around it. That's{" "}
               <strong className="font-semibold text-[var(--text-strong)]">
@@ -325,11 +371,11 @@ function BlogPost() {
               around its edge. The analogy holds.
             </p>
 
-            <h2 className="text-2xl md:text-3xl font-semibold text-[var(--text-strong)] mt-12 mb-4">
+            <h2 className="text-lg md:text-xl font-semibold text-[var(--text-strong)] mt-12 mb-4">
               The Final Picture
             </h2>
 
-            <p className="text-base text-[var(--text-base)] leading-relaxed mb-6">
+            <p className="text-sm text-[var(--text-base)] leading-relaxed mb-6">
               So yes. My take on black holes might sound unusual at first. But
               the core idea stays simple. A black hole behaves like a rupture in
               spacetime. It acts like a breach that pulls everything toward it.
@@ -339,13 +385,27 @@ function BlogPost() {
               from an opening in a moving medium.
             </p>
 
-            <p className="text-base text-[var(--text-base)] leading-relaxed mb-6">
+            <p className="text-sm text-[var(--text-base)] leading-relaxed mb-6">
               This is how I see it. And this is the lens I use when I think
               about the universe.
             </p>
           </div>
         </article>
       </main>
+
+      <footer className="max-w-[900px] mx-auto px-6 md:px-12 py-8 mt-12 border-t border-[var(--border-muted)]">
+        <p className="text-sm text-[var(--text-dim)] text-center">
+          Follow me on{" "}
+          <a
+            href="https://x.com/tirthhh30"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[var(--text-base)] hover:text-[var(--text-strong)] transition-colors duration-200 underline underline-offset-2"
+          >
+            X
+          </a>
+        </p>
+      </footer>
     </>
   );
 }
