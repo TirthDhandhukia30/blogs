@@ -19,7 +19,7 @@ const blogPosts = [
     title: "My Take on the Blackhole Theory",
     excerpt: "A rupture in spacetime.",
     date: "Nov 15, 2025",
-    dateISO: "2025-10-28",
+    dateISO: "2025-11-15",
     readingTime: "5 min read",
     timeRequired: "PT7M",
     href: "/blog/blackhole-theory",

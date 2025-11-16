@@ -176,7 +176,7 @@ function BlogPost() {
         <article className="pt-2 md:pt-4 pb-12">
           <header className="pb-6 md:pb-8 border-b border-[var(--border-muted)] mb-8">
             <p className="text-xs uppercase tracking-[0.2em] text-[var(--text-dim)] mb-4">
-              <time dateTime="2025-10-28">Oct 28, 2025</time>
+              <time dateTime="2025-11-15">Nov 15, 2025</time>
               <span aria-hidden="true">&nbsp;&middot;&nbsp;</span>
               <span>7 min read</span>
             </p>
