@@ -1,5 +1,6 @@
 import { useMemo, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { SparklesCore } from "./ui/sparkles";
 
 const AUTHOR_NAME = "Tirth";
 const THEME_KEY = "blog-theme";
@@ -164,6 +165,19 @@ function App() {
 
   return (
     <>
+      {/* Sparkles Background */}
+      <div className="fixed inset-0 w-full h-full z-0 pointer-events-none">
+        <SparklesCore
+          background="transparent"
+          minSize={0.4}
+          maxSize={1}
+          particleDensity={1200}
+          className="w-full h-full"
+          particleColor={theme === "dark" ? "#FFFFFF" : "#000000"}
+        />
+        <div className="absolute inset-0 w-full h-full bg-[var(--bg-body)] [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
+      </div>
+
       <header className="sticky top-0 z-10 py-1.5 mb-4 backdrop-blur-lg bg-[var(--bg-body)] transition-[background] duration-300">
         <div className="max-w-[900px] mx-auto px-2 md:px-3 flex items-center justify-between">
           <div className="flex flex-col">
@@ -195,7 +209,7 @@ function App() {
         </div>
       </header>
 
-      <main id="top" className="max-w-[900px] mx-auto px-6 md:px-12 pb-12">
+      <main id="top" className="max-w-[900px] mx-auto px-6 md:px-12 pb-12 relative z-1">
         <section className="pt-2 md:pt-4 pb-6 md:pb-10 border-b border-[var(--border-muted)]">
           <p className="text-xs tracking-[0.3em] uppercase text-[var(--text-dim)] mb-4">
             Hi, I'm Tirth.
