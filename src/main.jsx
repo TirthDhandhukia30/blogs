@@ -5,6 +5,7 @@ import "./styles.css";
 import App from "./App.jsx";
 import BlogPost from "./BlogPost.jsx";
 import TimeTravelPost from "./TimeTravelPost.jsx";
+import CloudOutagePost from "./CloudOutagePost.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -13,6 +14,7 @@ createRoot(document.getElementById("root")).render(
         <Route path="/" element={<App />} />
         <Route path="/blog/blackhole-theory" element={<BlogPost />} />
         <Route path="/blog/time-travel" element={<TimeTravelPost />} />
+        <Route path="/blog/cloud-outage" element={<CloudOutagePost />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>

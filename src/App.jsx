@@ -1,6 +1,5 @@
 import { useMemo, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { SparklesCore } from "./ui/sparkles";
 
 const AUTHOR_NAME = "Tirth";
 const THEME_KEY = "blog-theme";
@@ -15,6 +14,19 @@ const getInitialTheme = () => {
 };
 
 const blogPosts = [
+  {
+    id: 3,
+    title: "When the Cloud Broke All at Once",
+    excerpt:
+      "Three pillars of the internet wobbled within months. Apps froze. Logins looped. Infrastructure showing where it hurts.",
+    date: "Nov 22, 2025",
+    dateISO: "2025-11-22",
+    readingTime: "6 min read",
+    timeRequired: "PT6M",
+    href: "/blog/cloud-outage",
+    canonical: "/blog/cloud-outage",
+    pinned: true,
+  },
   {
     id: 1,
     title: "My Take on the Blackhole Theory",
@@ -42,7 +54,7 @@ const blogPosts = [
 
 const placeholderPosts = [
   {
-    id: 3,
+    id: 4,
     title: "",
     excerpt: "",
     date: "",
@@ -74,15 +86,31 @@ function BlogCard({ post }) {
       className="block focus-visible:outline-none group"
       aria-label={`Read ${post.title}`}
     >
-      <article className="relative border border-[var(--border-muted)] bg-[var(--bg-panel)]/40 backdrop-blur-sm p-6 transition-all duration-200 hover:border-[var(--border-strong)] hover:bg-[var(--bg-panel)]/60 overflow-hidden">
+      <article className="relative border border-[var(--border-muted)] bg-[var(--bg-panel)] p-6 transition-all duration-200 hover:border-[var(--border-strong)] overflow-hidden">
+        {post.pinned && (
+          <div
+            className="absolute top-4 right-4 text-[var(--text-dim)] hover:text-[var(--text-strong)] transition-colors"
+            title="Pinned"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              className="w-4 h-4"
+              fill="currentColor"
+              stroke="currentColor"
+              strokeWidth="1.5"
+            >
+              <path d="M16 12V4h1a1 1 0 0 0 0-2H7a1 1 0 0 0 0 2h1v8l-2 2v2h5.2l-.6 5a1 1 0 0 0 1 1.2 1 1 0 0 0 1-.8l.8-5.4H19v-2l-3-2z" />
+            </svg>
+          </div>
+        )}
         <div className="relative">
           {/* Meta info */}
           <div className="flex items-center gap-2.5 mb-3">
-            <time className="text-[11px] text-[var(--text-dim)] tracking-[0.08em] font-medium">
+            <time className="text-xs text-[var(--text-dim)] tracking-[0.08em] font-bold">
               {post.date}
             </time>
             <span className="w-0.5 h-0.5 rounded-full bg-[var(--text-dim)]"></span>
-            <span className="text-[11px] text-[var(--text-dim)] tracking-[0.08em]">
+            <span className="text-xs text-[var(--text-dim)] tracking-[0.08em] font-medium">
               {post.readingTime}
             </span>
           </div>
@@ -165,20 +193,7 @@ function App() {
 
   return (
     <>
-      {/* Sparkles Background */}
-      <div className="fixed inset-0 w-full h-full z-0 pointer-events-none">
-        <SparklesCore
-          background="transparent"
-          minSize={0.4}
-          maxSize={1}
-          particleDensity={1200}
-          className="w-full h-full"
-          particleColor={theme === "dark" ? "#FFFFFF" : "#000000"}
-        />
-        <div className="absolute inset-0 w-full h-full bg-[var(--bg-body)] [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
-      </div>
-
-      <header className="sticky top-0 z-10 py-1.5 mb-4 backdrop-blur-lg bg-[var(--bg-body)] transition-[background] duration-300">
+      <header className="sticky top-0 z-10 py-1.5 mb-4 backdrop-blur-lg bg-[var(--bg-body)] transition-[background] duration-300 border-b border-[var(--border-muted)]">
         <div className="max-w-[900px] mx-auto px-2 md:px-3 flex items-center justify-between">
           <div className="flex flex-col">
             <time className="text-1xl md:text-2xl font-semibold text-[var(--text-strong)] leading-tight">
@@ -209,7 +224,7 @@ function App() {
         </div>
       </header>
 
-      <main id="top" className="max-w-[900px] mx-auto px-6 md:px-12 pb-12 relative z-1">
+      <main id="top" className="max-w-[900px] mx-auto px-6 md:px-12 pb-12">
         <section className="pt-2 md:pt-4 pb-6 md:pb-10 border-b border-[var(--border-muted)]">
           <p className="text-xs tracking-[0.3em] uppercase text-[var(--text-dim)] mb-4">
             Hi, I'm Tirth.
